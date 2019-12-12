@@ -24,6 +24,21 @@ usage: utility-name
 
 High level flow of the encoding flow is covered here.
 
-1) Initialization of the Bitmovin [API](https://github.com/morphkurt/bitmovin-encoding-demo/blob/515f0a6ad9ce4060c8b464bbdc4aa77deee4552c/src/main/java/xyz/damitha/bitmovin/noDRM.java#L77)
-2) Creating an encoding [Object](https://github.com/morphkurt/bitmovin-encoding-demo/blob/515f0a6ad9ce4060c8b464bbdc4aa77deee4552c/src/main/java/xyz/damitha/bitmovin/noDRM.java#L85)
+1) Initialization of the Bitmovin API
+```java
+bitmovinApi = BitmovinApi.builder().withApiKey(api_key).withLogger(new Slf4jLogger(), Level.BASIC).build();
+```
+2) Creating an encoding object
+```java
+Encoding encoding = createEncoding("Multiple FMP4 with DASH and HLS", "Encoding with multiple fMP4 muxings");
+```
+3) Create the S3 Bucket configration with access key and secret
+```java
+Output output = createS3Output(cmd.getOptionValue("s3-bucket"), cmd.getOptionValue("s3-access-key"),cmd.getOptionValue("s3-secret-key"));
+```
+4) Create HTTP input to read the source video file from URL
+```java
+String inputFilePath = cmd.getOptionValue("input-path");
+HttpInput input = createHttpInput(cmd.getOptionValue("input-host"));
+```
 
