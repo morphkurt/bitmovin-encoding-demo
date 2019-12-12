@@ -41,4 +41,28 @@ Output output = createS3Output(cmd.getOptionValue("s3-bucket"), cmd.getOptionVal
 String inputFilePath = cmd.getOptionValue("input-path");
 HttpInput input = createHttpInput(cmd.getOptionValue("input-host"));
 ```
-
+5) Create multiple H264 video renditions
+```java
+final List<H264VideoConfiguration> videoConfigurations = Arrays.asList(
+     createH264VideoConfig(1080, 4_800_000L), createH264VideoConfig(720, 2_400_000L),
+     createH264VideoConfig(480, 1_200_000L), createH264VideoConfig(360, 800_000L),
+     createH264VideoConfig(240, 400_000L));
+```
+6) Create Audio and Multiple Video Streams
+```java
+ Stream videoStream = createStream(encoding, input, inputFilePath, videoConfiguration);
+ Stream audioStream = createStream(encoding, input, inputFilePath, aacConfig);
+```
+7) Create Multiple fMP4 Muxing for each audio and video track (example)
+```java
+createFmp4Muxing(encoding, output, "audio", audioStream);
+```
+8) Execute Encoding
+```java
+executeEncoding(encoding);
+```
+9) Create DASH and HLS outputs
+```java
+generateDashManifest(encoding, output, "/");
+generateHlsManifest(encoding, output, "/");
+```
