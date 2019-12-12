@@ -66,3 +66,52 @@ executeEncoding(encoding);
 generateDashManifest(encoding, output, "/");
 generateHlsManifest(encoding, output, "/");
 ```
+
+
+
+##  DRM Solution
+
+### Build the Project
+
+Clone the repo and build the project
+
+```bash
+
+mvn install
+mvn package
+
+java -cp usecase1-1.0-SNAPSHOT-jar-with-dependencies.jar xyz.damitha.bitmovin.DRM 
+Missing required options: k, sb, sak, ssk, ih, ip
+usage: utility-name
+ -ck,--cenc-key <arg>         CENC Key
+ -ckid,--cenc-key-id <arg>    CENC Key id
+ -fiv,--fairplay-iv <arg>     Fairplay IV
+ -furi,--fairplay-uri <arg>   Fairplay URI
+ -ih,--input-host <arg>       input Host
+ -ip,--input-path <arg>       input Path
+ -k,--api-key <arg>           Bitmovin API Key
+ -sak,--s3-access-key <arg>   s3 Access Key
+ -sb,--s3-bucket <arg>        s3 Bucket
+ -ssk,--s3-secret-key <arg>   s3 Secret Key
+ -wvp,--widevine-pssh <arg>   Widevine PSSH
+```
+
+High level flow of the encoding flow is same as nonDRM however extra step is required to create CENC encryption
+
+Each video and audio muxer needs to be passed encryption process. Which requires few parameters. These parameters needs to confirmed with DRM providers.
+
+```java
+CencDrm cencDrm = new CencDrm();
+cencDrm.addOutputsItem(buildEncodingOutput(output, outputPath));
+cencDrm.setKey(cmd.getOptionValue("cenc-key"));
+cencDrm.setKid(cmd.getOptionValue("cenc-key-id"));
+
+CencWidevine widevineDrm = new CencWidevine();
+widevineDrm.setPssh(cmd.getOptionValue("widevine-pssh"));
+cencDrm.setWidevine(widevineDrm);
+
+CencFairPlay cencFairPlay = new CencFairPlay();
+cencFairPlay.setIv(cmd.getOptionValue("fairplay-iv"));
+cencFairPlay.setUri(cmd.getOptionValue("fairplay-uri"));
+cencDrm.setFairPlay(cencFairPlay);
+```
