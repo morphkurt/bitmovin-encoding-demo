@@ -22,5 +22,8 @@ usage: utility-name
  -ssk,--s3-secret-key <arg>   s3 Secret Key
 ```
 
+High level flow of the encoding flow is covered here.
 
+1) Initialization of the Bitmoving (API)[https://github.com/morphkurt/bitmovin-encoding-demo/blob/515f0a6ad9ce4060c8b464bbdc4aa77deee4552c/src/main/java/xyz/damitha/bitmovin/noDRM.java#L77]
+2) 
 
