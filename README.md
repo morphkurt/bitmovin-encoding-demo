@@ -10,6 +10,7 @@ Clone the repo and build the project
 
 mvn install
 mvn package
+cd target
 
 java -cp usecase1-1.0-SNAPSHOT-jar-with-dependencies.jar xyz.damitha.bitmovin.noDRM 
 Missing required options: k, sb, sak, ssk, ih, ip
