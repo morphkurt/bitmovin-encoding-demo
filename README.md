@@ -9,7 +9,6 @@ Clone the repo and build the project
 ```bash
 
 mvn install
-mvn package
 cd target
 
 java -cp usecase1-1.0-SNAPSHOT-jar-with-dependencies.jar xyz.damitha.bitmovin.noDRM 
