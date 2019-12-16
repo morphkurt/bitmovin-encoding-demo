@@ -1,5 +1,7 @@
 # Bitmovin Java Encoding Example 
 
+Include Bitmovin in your Maven dependecies as shown (here)[https://github.com/morphkurt/bitmovin-encoding-demo/blob/f7a308bb60579e51b10853d0f8d152ef0545d9c1/pom.xml#L32-L36]
+
 ## Non DRM Solution
 
 ### Build the Project
